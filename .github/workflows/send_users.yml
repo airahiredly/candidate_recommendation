@@ -29,5 +29,5 @@ jobs:
         env:
           USERS_JSON: ${{ inputs.users_json }}
           JOB_DETAILS: ${{ inputs.job_details }}
-          WEBHOOK_URL: https://your-webhook-url.com
+          WEBHOOK_URL: https://n8n-app-p68zu.ondigitalocean.app/webhook/78a12fd5-0abd-491e-a689-60d5d305b921
         run: python send_users.py
