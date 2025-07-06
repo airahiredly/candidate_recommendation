@@ -25,12 +25,9 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run script to send users
-        env:
-          USERS_JSON: ${{ inputs.users_json }}
-          JOB_DETAILS: ${{ inputs.job_details }}
-          WEBHOOK_URL: https://n8n-app-p68zu.ondigitalocean.app/webhook/78a12fd5-0abd-491e-a689-60d5d305b921
+      - name: Create script file
         run: |
+          cat << 'EOF' > send_users.py
           import os
           import json
           import requests
@@ -88,3 +85,11 @@ jobs:
 
           if __name__ == "__main__":
               main()
+          EOF
+
+      - name: Run script to send users
+        env:
+          USERS_JSON: ${{ inputs.users_json }}
+          JOB_DETAILS: ${{ inputs.job_details }}
+          WEBHOOK_URL: https://n8n-app-p68zu.ondigitalocean.app/webhook/78a12fd5-0abd-491e-a689-60d5d305b921
+        run: python send_users.py
