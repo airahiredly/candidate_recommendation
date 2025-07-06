@@ -1,0 +1,33 @@
+name: Send Users to Webhook
+
+on:
+  workflow_dispatch:
+    inputs:
+      users_json:
+        description: 'JSON array of users'
+        required: true
+      job_details:
+        description: 'JSON object of job details'
+        required: true
+
+jobs:
+  send-users:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run script to send users
+        env:
+          USERS_JSON: ${{ inputs.users_json }}
+          JOB_DETAILS: ${{ inputs.job_details }}
+          WEBHOOK_URL: https://your-webhook-url.com
+        run: python send_users.py
