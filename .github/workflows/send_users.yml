@@ -36,6 +36,8 @@ jobs:
           import requests
           import sys
 
+          print("🔹 Starting script...")
+
           def send_user_data(user, job_details, webhook_url):
               headers = {'Content-Type': 'application/json'}
               payload = {
@@ -62,12 +64,14 @@ jobs:
                   print("Error: JOB_DETAILS environment variable is not set.")
                   sys.exit(1)
 
+              print("🔹 Parsing USERS_JSON...")
               try:
                   users = json.loads(users_json_str)
               except json.JSONDecodeError as e:
                   print(f"Error decoding USERS_JSON: {e}")
                   sys.exit(1)
 
+              print("🔹 Parsing JOB_DETAILS...")
               try:
                   job_details = json.loads(job_details_str)
               except json.JSONDecodeError as e:
@@ -78,6 +82,7 @@ jobs:
                   print("Error: USERS_JSON must be a JSON array.")
                   sys.exit(1)
 
+              print(f"🔹 Found {len(users)} users. Sending data...")
               for user in users:
                   send_user_data(user, job_details, webhook_url)
 
